@@ -12,4 +12,3 @@ class Word(BaseModel):
     sentences: List[Sentence] = []
     is_completed: bool = False
     creation: int = int(datetime.timestamp(datetime.now()))
-

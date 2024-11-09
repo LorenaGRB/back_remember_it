@@ -1,0 +1,7 @@
+TO CREATE A BATCH OPERATION TO CREATE SENTENCES WITH OPEN API 
+
+To know an overview of the batch processing
+https://platform.openai.com/docs/guides/batch/getting-started
+
+To see an example:
+https://cookbook.openai.com/examples/batch_processing
