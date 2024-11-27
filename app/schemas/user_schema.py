@@ -1,18 +1,6 @@
 from pydantic import BaseModel, Field, EmailStr
-from datetime import datetime
 from typing import List
-
-class SentenceSchema(BaseModel):
-    sentence: str
-    date: datetime
-
-class WordSchema(BaseModel):
-    name: str
-    context: str
-    is_active: bool
-    creation_date: datetime
-    sentences: List[SentenceSchema] = []
-
+from app.schemas.word_schema import WordSchema
 class UserSchema(BaseModel):
     username: str
     pwd: str
@@ -20,6 +8,12 @@ class UserSchema(BaseModel):
     fullname: str
     mobile_tkn: str
     words: List[WordSchema] = []
-
 class UserResponse(UserSchema):
     id: str = Field(..., alias="id")
+
+class UserToLogin(BaseModel):
+    username: str
+    pwd: str
+
+class LoginResponse(BaseModel):
+    access_token: str
