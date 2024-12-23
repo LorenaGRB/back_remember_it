@@ -1,4 +1,3 @@
-
 import json
 from fastapi import APIRouter
 from app.openAPi.openAi_service import generate_service
@@ -12,7 +11,6 @@ router = APIRouter()
 async def generate_sentence(word:GenerateSentenceSchemaInput):
     sentence_generated = await generate_service(word)
     if(sentence_generated):
-        return CREATED_RESPONSE(data= json.dumps(sentence_generated,default=str))
+        return CREATED_RESPONSE(data=sentence_generated)
     else:
         raise INTERNAL_ERROR()
-    
