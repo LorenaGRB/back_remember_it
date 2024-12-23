@@ -9,7 +9,7 @@ def validate_word_schema(word_to_add: WordSchema):
 
 async def validate_word_not_exists(word_data: dict,user: dict) -> dict:
     name = word_data["name"]
-    context= word_data["context"]
+    context = word_data["context"]
     for word in user["words"]:
-        if((word["name"] == name) or (word["context"] == context)):
-            raise INTERNAL_ERROR(detail="The word already exists")
+        if word["name"] == name and word["context"] == context:
+            raise INTERNAL_ERROR(detail="A word with this name and context already exists")

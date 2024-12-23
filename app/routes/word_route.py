@@ -1,4 +1,3 @@
-
 import json
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
@@ -13,7 +12,6 @@ router = APIRouter()
 async def create_word(word_data:AddWordInput):
     updated_user = await add_word(word_data)
     if(updated_user):
-        return CREATED_RESPONSE(data= json.dumps(updated_user,default=str))
+        return CREATED_RESPONSE(data=updated_user)
     else:
         raise INTERNAL_ERROR()
-    
