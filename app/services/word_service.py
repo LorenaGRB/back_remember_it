@@ -23,3 +23,8 @@ async def add_word(input_data: AddWordInput):
     
 async def get_all_words(id: str): 
     return await word_repo.get_all_words(id)
+
+
+
+# OBTENER SOLAMENTE LAS PALABRAS Y EL CONTEXTO
+# OBTENER LAS ORACIONES BUSCANDO LA PALABRA Y EL CONTEXTO 
