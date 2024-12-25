@@ -7,6 +7,7 @@ from pymongo.collection import Collection
 from app.db import db
 from app.schemas.user_schema import UserSchema
 from app.schemas.word_schema import WordSchema
+from app.services.user_service import get_user_by_id
 from app.utils.exceptions import INTERNAL_ERROR
 
 class WordRepository:
@@ -20,5 +21,13 @@ class WordRepository:
                 {"$push": {"words": word_data}}
             )
             return word_data
+        except:
+            raise INTERNAL_ERROR()
+        
+    async def get_all_words(self, id: str) -> dict:
+        try:
+            user = await get_user_by_id(id)
+            words = user["words"]
+            return words
         except:
             raise INTERNAL_ERROR()

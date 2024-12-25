@@ -48,5 +48,6 @@ async def login(user: UserToLogin):
         raise UNAUTHORIZED()
     token_username={"sub": saved_user}
     access_token = create_access_token(token_username)
-
-    return { "access_token": str(access_token)}
+    user_id = saved_user["id"]
+    username = saved_user["username"]
+    return { "token": str(access_token), "id": user_id, "username": username}

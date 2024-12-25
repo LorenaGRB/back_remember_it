@@ -20,3 +20,6 @@ async def add_word(input_data: AddWordInput):
         return updated_user
     else:
         raise NOT_FOUND("User id is not valid")
+    
+async def get_all_words(id: str): 
+    return await word_repo.get_all_words(id)
