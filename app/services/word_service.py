@@ -21,10 +21,8 @@ async def add_word(input_data: AddWordInput):
     else:
         raise NOT_FOUND("User id is not valid")
     
-async def get_all_words(id: str): 
-    return await word_repo.get_all_words(id)
+async def get_all_words(user_id: str, page: int = 1, page_size: int = 10): 
+    return await word_repo.get_all_words(user_id, page, page_size)
 
 
 
-# OBTENER SOLAMENTE LAS PALABRAS Y EL CONTEXTO
-# OBTENER LAS ORACIONES BUSCANDO LA PALABRA Y EL CONTEXTO 
