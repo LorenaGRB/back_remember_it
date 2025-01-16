@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date
 from bson import ObjectId
 
 
@@ -14,9 +14,8 @@ user_model = {
             "name": str,
             "context": str,
             "is_active": bool,
-            "creation_date": datetime,
             "sentences": [
-                {"sentence": str, "date": datetime}
+                {"sentence": str, "notification_planned_date": date, "notification_sent": bool}
             ],
         }
     ],

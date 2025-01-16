@@ -1,13 +1,14 @@
-import json
-from fastapi import APIRouter
-from app.openAPi.openAi_service import generate_service, send_batch_service,get_batch_list_service, get_batch_status_service, get_batch_results_service,save_sentences_from_batch_service
+from fastapi import APIRouter, Depends
+from app.external_services.openAiApi.openAi_service import generate_service, send_batch_service,get_batch_list_service, get_batch_status_service, get_batch_results_service,save_sentences_from_batch_service
+from app.middlewares.auth import AuthenticationMiddleware
 from app.schemas.sentence_schema import GenerateSentenceSchemaInput
 from app.utils.exceptions import INTERNAL_ERROR
 from app.utils.responses import CREATED_RESPONSE, SUCCESS_RESPONSE
 
 router = APIRouter()
+auth  = AuthenticationMiddleware()
 
-@router.post("/generate")
+@router.post("/generate", dependencies = [Depends(auth)])
 async def generate_sentence(word:GenerateSentenceSchemaInput):
   sentence_generated = await generate_service(word)
   if(sentence_generated):
@@ -15,7 +16,7 @@ async def generate_sentence(word:GenerateSentenceSchemaInput):
   else:
     raise INTERNAL_ERROR()
 
-@router.get("/send_batch")
+@router.get("/send_batch", dependencies = [Depends(auth)])
 async def send_batch():
   generated_batch = await send_batch_service()
   if(generated_batch):
@@ -23,7 +24,7 @@ async def send_batch():
   else:
     raise INTERNAL_ERROR()
 
-@router.get("/batch_list")
+@router.get("/batch_list", dependencies = [Depends(auth)])
 async def get_batch_list():
   batch_list = await get_batch_list_service() 
   if(batch_list):
@@ -31,16 +32,15 @@ async def get_batch_list():
   else:
     raise INTERNAL_ERROR()
 
-@router.get("/batch_status/{batch_id}")
+@router.get("/batch_status/{batch_id}", dependencies = [Depends(auth)])
 async def get_batch_status(batch_id: str):
-  print("batch_id")
   batch_job = await get_batch_status_service(batch_id)
   if(batch_job):
     return SUCCESS_RESPONSE(data=batch_job)
   else:
     raise INTERNAL_ERROR()
 
-@router.get("/batch_result/{output_file_id}")
+@router.get("/batch_result/{output_file_id}", dependencies = [Depends(auth)])
 async def get_batch_result_service(output_file_id: str):
   result = await get_batch_results_service(output_file_id)
   if(result):
@@ -48,7 +48,7 @@ async def get_batch_result_service(output_file_id: str):
   else:
     raise INTERNAL_ERROR()
 
-@router.get("/save_batch_sentences")
+@router.get("/save_batch_sentences", dependencies = [Depends(auth)])
 async def save_batch_sentences():
   try:
     finished = await save_sentences_from_batch_service()

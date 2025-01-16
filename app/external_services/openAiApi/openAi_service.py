@@ -1,10 +1,12 @@
 from app.schemas.sentence_schema import GenerateSentenceSchemaInput
-from app.openAPi.openAI_config import openAI
+from app.external_services.openAiApi.openAI_config import openAI
 from app.services.user_service import get_all_users
 from app.services.sentences_service import create_sentence_service
 import json
 import os
 from openai import OpenAI
+
+from app.utils.exceptions import INTERNAL_ERROR
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = OpenAI() 

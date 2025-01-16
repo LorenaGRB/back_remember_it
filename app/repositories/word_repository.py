@@ -32,7 +32,7 @@ class WordRepository:
     except:
       raise INTERNAL_ERROR()
 
-  async def update_sentences(self, user_id: str, word_name: str, context: str, new_sentences: list):
+  async def update_sentences(self, user_id: str, word_name: str, context: str, new_sentences: List[dict]):
     try:
       res = await self.collection.update_one(
         {"_id": ObjectId(user_id), "words.name": word_name, "words.context": context},

@@ -2,6 +2,7 @@ from pymongo.collection import Collection
 from bson import ObjectId
 from app.db import db
 from app.schemas.user_schema import UserSchema
+from app.utils.exceptions import INTERNAL_ERROR
 
 class UserRepository:
     def __init__(self, collection: Collection = db.users):
@@ -40,3 +41,22 @@ class UserRepository:
         user_dict = dict(user)
         user_dict["id"] = str(user_dict.pop("_id"))
         return user_dict
+    
+    async def save_user_token_repository(self, token_info):
+      user_id = token_info.user_id
+      mobile_token = token_info.mobile_token
+      try:
+        await self.collection.update_one(
+          {"_id": ObjectId(user_id)},
+          {"$set": {"mobile_tkn": mobile_token}}
+        )
+        return {"id": user_id, "mobile_tkn": mobile_token}
+      except:
+        raise INTERNAL_ERROR()
+        
+    async def get_mobile_token_repository(self, user_id: str):
+      try:
+        user = await self.collection.find_one({"_id": ObjectId(user_id)})
+        return user["mobile_tkn"]
+      except:
+        raise INTERNAL_ERROR()

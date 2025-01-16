@@ -17,3 +17,7 @@ class UserToLogin(BaseModel):
 
 class LoginResponse(BaseModel):
     access_token: str
+
+class SaveUserTokenInput(BaseModel):
+    user_id: str
+    mobile_token: str

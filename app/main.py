@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routes import sentence_route, user_route, word_route
+from app.routes import sentence_route, user_route, word_route,push_notification_route
 from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
@@ -14,3 +14,4 @@ app.add_middleware(
 app.include_router(user_route.router, prefix="/users", tags=["Users"])
 app.include_router(word_route.router, prefix="/words", tags=["Words"])
 app.include_router(sentence_route.router, prefix="/sentences", tags=["Sentences"])
+app.include_router(push_notification_route.router, prefix="/push_notifications", tags=["Push Notifications"])

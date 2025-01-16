@@ -46,8 +46,14 @@ async def login(user: UserToLogin):
     is_verified = verify_password(current_pwd,saved_pwd)
     if not is_verified:
         raise UNAUTHORIZED()
-    token_username={"sub": saved_user}
+    token_username={"id": saved_user["id"], "username": saved_user["username"]}
     access_token = create_access_token(token_username)
     user_id = saved_user["id"]
     username = saved_user["username"]
     return { "token": str(access_token), "id": user_id, "username": username}
+
+async def save_user_token_service(token_info):
+    return await user_repo.save_user_token_repository(token_info)
+
+async def get_mobile_token_service(user_id: str):
+    return await user_repo.get_mobile_token_repository(user_id)
